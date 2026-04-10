@@ -123,17 +123,26 @@ Add screenshots in [docs/screenshots](/Users/eshaansharma/Downloads/FULL STACK P
 
 1. Import the GitHub repo into Vercel.
 2. Set the project root directory to `server`.
-3. Set build command to blank and output directory to blank.
-4. Set environment variables from `.env.example`.
-5. Deploy using `server/api/index.js` as the serverless entry.
+3. Framework preset: `Other`.
+4. Vercel will use [server/vercel.json](/Users/eshaansharma/Downloads/FULL STACK PROJECT EST ASSESMENT/server/vercel.json).
+5. Add environment variables:
+   `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CLIENT_URL`, `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `EMAIL_USER`, `EMAIL_PASS`
+6. Deploy. The API health URL will be `/api/health`.
 
 ### Frontend deployment
 
 1. Create a second Vercel project for the same repo.
 2. Set the project root directory to `client`.
-3. Build command: `npm run build`
-4. Output directory: `dist`
-5. Add `VITE_API_URL` pointing to your deployed backend URL plus `/api`.
+3. Framework preset: `Vite`.
+4. Build command: `npm run build`
+5. Output directory: `dist`
+6. Add `VITE_API_URL` pointing to your deployed backend URL plus `/api`
+7. Vercel will use [client/vercel.json](/Users/eshaansharma/Downloads/FULL STACK PROJECT EST ASSESMENT/client/vercel.json) so React routes work after refresh.
+
+### Suggested environment values
+
+- Backend `CLIENT_URL`: your deployed frontend URL
+- Frontend `VITE_API_URL`: your deployed backend URL followed by `/api`
 
 ## GitHub Push Commands
 

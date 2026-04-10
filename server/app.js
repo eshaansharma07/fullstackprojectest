@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import "express-async-errors";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
