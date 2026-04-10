@@ -1,11 +1,11 @@
 import { sendSuccess } from "../utils/apiResponse.js";
 import Notification from "../models/Notification.js";
-import Category from "../models/Category.js";
+import { ensureDefaultCategories } from "../utils/bootstrapCategories.js";
 
 export const getPublicMeta = async (_req, res) => {
   const [announcements, categories] = await Promise.all([
     Notification.find({ isGlobal: true }).sort({ createdAt: -1 }).limit(5),
-    Category.find().sort({ name: 1 })
+    ensureDefaultCategories()
   ]);
 
   return sendSuccess(res, {

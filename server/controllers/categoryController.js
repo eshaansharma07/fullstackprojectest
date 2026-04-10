@@ -1,8 +1,9 @@
 import Category from "../models/Category.js";
 import { sendSuccess, createError } from "../utils/apiResponse.js";
+import { ensureDefaultCategories } from "../utils/bootstrapCategories.js";
 
 export const getCategories = async (_req, res) => {
-  const categories = await Category.find().sort({ name: 1 });
+  const categories = await ensureDefaultCategories();
   return sendSuccess(res, { data: categories });
 };
 
