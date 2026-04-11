@@ -16,15 +16,15 @@ export function Navbar() {
   const { theme, setTheme, language, setLanguage } = useApp();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#170f12]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
         <Link to="/" className="flex items-center gap-3">
-          <div className="rounded-2xl bg-gradient-to-br from-sky-400 to-emerald-400 p-2 text-slate-950">
+          <div className="rounded-2xl bg-gradient-to-br from-[#e23744] to-[#ff6b57] p-2 text-white shadow-lg shadow-[#e23744]/30">
             <Bell size={18} />
           </div>
           <div>
-            <div className="font-display text-lg font-semibold text-white dark:text-white">EventSphere</div>
-            <div className="text-xs text-slate-400">Smart Event Management</div>
+            <div className="font-display text-lg font-semibold text-white">EventSphere</div>
+            <div className="text-xs text-[#d3b8b8]">Discover. Register. Host.</div>
           </div>
         </Link>
 
@@ -34,7 +34,7 @@ export function Navbar() {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `text-sm ${isActive ? "text-sky-300" : "text-slate-300 hover:text-white"}`
+                `text-sm ${isActive ? "text-[#ff8c7d]" : "text-[#f7d8d3] hover:text-white"}`
               }
             >
               {link.label}
@@ -45,13 +45,13 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLanguage(language === "en" ? "hi" : "en")}
-            className="rounded-2xl border border-white/10 bg-white/5 p-3 text-slate-200"
+            className="rounded-full border border-white/10 bg-white/5 p-3 text-[#fff2ef]"
           >
             <Globe2 size={16} />
           </button>
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-2xl border border-white/10 bg-white/5 p-3 text-slate-200"
+            className="rounded-full border border-white/10 bg-white/5 p-3 text-[#fff2ef]"
           >
             {theme === "dark" ? <SunMedium size={16} /> : <MoonStar size={16} />}
           </button>

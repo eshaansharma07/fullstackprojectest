@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 const toneMap = {
-  sky: "bg-sky-500/15 text-sky-300",
-  emerald: "bg-emerald-500/15 text-emerald-300",
-  pink: "bg-pink-500/15 text-pink-300",
-  amber: "bg-amber-500/15 text-amber-300"
+  sky: "bg-[#e23744]/15 text-[#ff9d95]",
+  emerald: "bg-[#ffb47d]/15 text-[#ffc08e]",
+  pink: "bg-[#f7758b]/15 text-[#ff9cab]",
+  amber: "bg-[#ffcf8b]/15 text-[#ffd9a7]"
 };
 
 export function StatCard({ title, value, description, icon: Icon, tone = "sky" }) {
@@ -14,15 +14,15 @@ export function StatCard({ title, value, description, icon: Icon, tone = "sky" }
       className="glass rounded-3xl p-5"
     >
       <div className="mb-4 flex items-center justify-between">
-        <span className="text-sm text-slate-400">{title}</span>
+        <span className="text-sm text-[#d4b8b3]">{title}</span>
         {Icon ? (
           <div className={`rounded-2xl p-3 ${toneMap[tone] || toneMap.sky}`}>
             <Icon size={20} />
           </div>
         ) : null}
       </div>
-      <div className="text-3xl font-semibold text-white dark:text-white">{value}</div>
-      <p className="mt-2 text-sm text-slate-400">{description}</p>
+      <div className="text-3xl font-semibold text-white">{value}</div>
+      <p className="mt-2 text-sm text-[#ccb2ad]">{description}</p>
     </motion.div>
   );
 }

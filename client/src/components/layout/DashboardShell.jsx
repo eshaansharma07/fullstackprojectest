@@ -30,13 +30,13 @@ export function DashboardShell() {
 
   return (
     <div className="mx-auto grid min-h-screen max-w-7xl gap-6 px-4 py-6 md:grid-cols-[280px_1fr] md:px-6">
-      <aside className="glass h-fit rounded-[28px] p-5">
-        <Link to="/" className="mb-8 block font-display text-2xl font-semibold text-white dark:text-white">
+      <aside className="glass h-fit rounded-[28px] border border-white/5 p-5">
+        <Link to="/" className="mb-8 block font-display text-2xl font-semibold text-white">
           EventSphere
         </Link>
         <div className="mb-6 rounded-3xl bg-white/5 p-4">
-          <div className="text-lg font-semibold text-white dark:text-white">{user?.name}</div>
-          <div className="text-sm capitalize text-slate-400">{user?.role}</div>
+          <div className="text-lg font-semibold text-white">{user?.name}</div>
+          <div className="text-sm capitalize text-[#d1b3af]">{user?.role}</div>
         </div>
         <nav className="space-y-2">
           {links.map((link) => {
@@ -47,7 +47,7 @@ export function DashboardShell() {
                 to={link.to}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm ${
-                    isActive ? "bg-sky-500 text-white" : "text-slate-300 hover:bg-white/5"
+                    isActive ? "bg-[#e23744] text-white shadow-lg shadow-[#e23744]/20" : "text-[#efd7d3] hover:bg-white/5"
                   }`
                 }
               >
