@@ -7,7 +7,7 @@ function App() {
   const { theme } = useApp();
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.classList.remove("dark");
   }, [theme]);
 
   return <RouterProvider router={appRouter} />;

@@ -1,6 +1,7 @@
 import { CalendarRange, Heart, Home, LayoutDashboard, PlusSquare, ShieldCheck, UserCircle2 } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { BrandLogo } from "../common/BrandLogo.jsx";
 
 const roleLinks = {
   participant: [
@@ -30,13 +31,13 @@ export function DashboardShell() {
 
   return (
     <div className="mx-auto grid min-h-screen max-w-7xl gap-6 px-4 py-6 md:grid-cols-[280px_1fr] md:px-6">
-      <aside className="glass h-fit rounded-[28px] border border-white/5 p-5">
-        <Link to="/" className="mb-8 block font-display text-2xl font-semibold text-white">
-          EventSphere
+      <aside className="glass h-fit rounded-[32px] p-5">
+        <Link to="/" className="mb-8 block">
+          <BrandLogo />
         </Link>
-        <div className="mb-6 rounded-3xl bg-white/5 p-4">
-          <div className="text-lg font-semibold text-white">{user?.name}</div>
-          <div className="text-sm capitalize text-[#d1b3af]">{user?.role}</div>
+        <div className="mb-6 rounded-3xl border border-slate-200/70 bg-white/75 p-4">
+          <div className="text-lg font-semibold text-slate-900">{user?.name}</div>
+          <div className="text-sm capitalize text-slate-500">{user?.role}</div>
         </div>
         <nav className="space-y-2">
           {links.map((link) => {
@@ -47,7 +48,9 @@ export function DashboardShell() {
                 to={link.to}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm ${
-                    isActive ? "bg-[#e23744] text-white shadow-lg shadow-[#e23744]/20" : "text-[#efd7d3] hover:bg-white/5"
+                    isActive
+                      ? "bg-[linear-gradient(135deg,#8b5cf6,#3b82f6)] text-white shadow-[0_12px_30px_rgba(59,130,246,0.22)]"
+                      : "text-slate-600 hover:bg-white/70 hover:text-slate-900"
                   }`
                 }
               >

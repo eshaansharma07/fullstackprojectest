@@ -14,7 +14,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Favorites</h1>
+      <h1 className="page-title">Favorites</h1>
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {favorites.map((event) => <EventCard key={event._id} event={event} />)}
       </div>

@@ -9,12 +9,12 @@ export function SectionHeading({ badge, title, description }) {
       className="space-y-3"
     >
       {badge ? (
-        <span className="zomato-pill">
+        <span className="accent-pill">
           {badge}
         </span>
       ) : null}
-      <h2 className="font-display text-3xl font-semibold text-white md:text-4xl">{title}</h2>
-      {description ? <p className="max-w-2xl text-[#d8c0bb]">{description}</p> : null}
+      <h2 className="font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">{title}</h2>
+      {description ? <p className="max-w-2xl text-slate-500">{description}</p> : null}
     </motion.div>
   );
 }

@@ -31,10 +31,10 @@ export default function SignupPage() {
 
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-2xl items-center px-4 py-12">
-      <form onSubmit={handleSubmit} className="glass w-full space-y-5 rounded-[32px] p-8">
+      <form onSubmit={handleSubmit} className="glass-strong w-full space-y-5 rounded-[32px] p-8">
         <div>
-          <h1 className="font-display text-3xl font-semibold text-white dark:text-white">Create your account</h1>
-          <p className="mt-2 text-sm text-slate-400">Sign up as admin, organizer, or participant.</p>
+          <h1 className="font-display text-3xl font-semibold text-slate-900">Create your account</h1>
+          <p className="mt-2 text-sm text-slate-500">Sign up as admin, organizer, or participant.</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           <input className="input" placeholder="Full name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
@@ -49,7 +49,7 @@ export default function SignupPage() {
           <input className="input" placeholder="Interests (comma separated)" value={form.interests} onChange={(e) => setForm({ ...form, interests: e.target.value })} />
         </div>
         <button className="btn-primary w-full" type="submit">Create account</button>
-        <div className="text-sm text-slate-400">
+        <div className="text-sm text-slate-500">
           Already have an account? <Link to="/login">Login</Link>
         </div>
       </form>

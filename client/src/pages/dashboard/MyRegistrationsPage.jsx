@@ -44,17 +44,17 @@ export default function MyRegistrationsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">My Registrations</h1>
-        <p className="mt-2 text-slate-400">Download tickets, view QR codes, and manage cancellations.</p>
+        <h1 className="page-title">My Registrations</h1>
+        <p className="page-subtitle">Download tickets, view QR codes, and manage cancellations.</p>
       </div>
       <div className="grid gap-6 xl:grid-cols-2">
         {registrations.map((item) => (
           <div key={item._id} className="glass rounded-[32px] p-6">
-            <div ref={(node) => { ticketRefs.current[item._id] = node; }} className="rounded-[24px] border border-dashed border-sky-400/30 bg-slate-950/40 p-5">
-              <div className="font-display text-2xl font-semibold text-white dark:text-white">{item.event?.title}</div>
-              <div className="mt-2 text-sm text-slate-400">{formatDate(item.event?.startDate)} · {item.event?.venue}</div>
-              <div className="mt-3 text-sm text-slate-300">Ticket: {item.ticketNumber}</div>
-              <div className="mt-3 text-sm capitalize text-slate-300">Status: {item.status}</div>
+            <div ref={(node) => { ticketRefs.current[item._id] = node; }} className="rounded-[24px] border border-dashed border-violet-200 bg-white/80 p-5">
+              <div className="font-display text-2xl font-semibold text-slate-900">{item.event?.title}</div>
+              <div className="mt-2 text-sm text-slate-500">{formatDate(item.event?.startDate)} · {item.event?.venue}</div>
+              <div className="mt-3 text-sm text-slate-600">Ticket: {item.ticketNumber}</div>
+              <div className="mt-3 text-sm capitalize text-slate-600">Status: {item.status}</div>
               <img src={item.qrCode} alt="QR Code" className="mt-4 h-32 w-32 rounded-2xl bg-white p-2" />
             </div>
             <div className="mt-5 flex flex-wrap gap-3">

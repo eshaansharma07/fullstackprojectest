@@ -24,8 +24,8 @@ export default function ParticipantDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Welcome, {user?.name}</h1>
-        <p className="mt-2 text-slate-400">Track your registrations, favorites, certificates, and leaderboard rank.</p>
+        <h1 className="page-title">Welcome, {user?.name}</h1>
+        <p className="page-subtitle">Track your registrations, favorites, certificates, and leaderboard rank.</p>
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">
@@ -53,9 +53,9 @@ export default function ParticipantDashboard() {
           <SectionHeading badge="AI Picks" title="Recommended events for you" />
           <div className="mt-5 space-y-4">
             {recommendations.slice(0, 3).map((event) => (
-              <div key={event._id} className="rounded-2xl bg-white/5 p-4">
-                <div className="font-medium text-white dark:text-white">{event.title}</div>
-                <div className="mt-1 text-sm text-slate-400">{event.category?.name}</div>
+              <div key={event._id} className="rounded-2xl border border-slate-100 bg-white/90 p-4">
+                <div className="font-medium text-slate-900">{event.title}</div>
+                <div className="mt-1 text-sm text-slate-500">{event.category?.name}</div>
               </div>
             ))}
           </div>

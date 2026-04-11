@@ -19,8 +19,8 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 md:px-6">
       <div className="glass rounded-[36px] p-8">
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Contact Us</h1>
-        <p className="mt-3 text-slate-400">Reach the EventSphere team for demos, support, or deployment help.</p>
+        <h1 className="page-title">Contact Us</h1>
+        <p className="mt-3 text-slate-500">Reach the EventSphere team for demos, support, or deployment help.</p>
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <input className="input" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
           <input className="input" type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />

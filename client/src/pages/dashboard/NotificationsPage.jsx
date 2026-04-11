@@ -23,14 +23,14 @@ export default function NotificationsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Notifications</h1>
+      <h1 className="page-title">Notifications</h1>
       <div className="space-y-4">
         {notifications.map((item) => (
           <div key={item._id} className="glass rounded-3xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="font-medium text-white dark:text-white">{item.title}</div>
-                <div className="mt-2 text-sm text-slate-300">{item.message}</div>
+                <div className="font-medium text-slate-900">{item.title}</div>
+                <div className="mt-2 text-sm text-slate-600">{item.message}</div>
                 <div className="mt-2 text-xs text-slate-500">{fromNow(item.createdAt)}</div>
               </div>
               {!item.isRead ? (

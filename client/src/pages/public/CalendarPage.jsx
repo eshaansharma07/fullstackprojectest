@@ -33,8 +33,8 @@ export default function CalendarPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 md:px-6">
       <div className="mb-6">
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Event Calendar</h1>
-        <p className="mt-2 text-slate-400">View all approved events in calendar mode.</p>
+        <h1 className="page-title">Event Calendar</h1>
+        <p className="page-subtitle">View all approved events in calendar mode.</p>
       </div>
       <div className="h-[75vh]">
         <Calendar localizer={localizer} events={calendarEvents} startAccessor="start" endAccessor="end" />

@@ -4,12 +4,12 @@ import api from "../api/http.js";
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  const [theme, setTheme] = useState(localStorage.getItem("eventsphere_theme") || "dark");
+  const [theme, setTheme] = useState(localStorage.getItem("eventsphere_theme") || "light");
   const [language, setLanguage] = useState(localStorage.getItem("eventsphere_language") || "en");
   const [meta, setMeta] = useState({ announcements: [], categories: [], faq: [] });
 
   useEffect(() => {
-    document.body.classList.toggle("light", theme === "light");
+    document.body.classList.add("light");
     localStorage.setItem("eventsphere_theme", theme);
   }, [theme]);
 

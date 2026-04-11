@@ -63,8 +63,8 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Admin Dashboard</h1>
-        <p className="mt-2 text-slate-400">Approve events, manage users, categories, reports, and platform health.</p>
+        <h1 className="page-title">Admin Dashboard</h1>
+        <p className="page-subtitle">Approve events, manage users, categories, reports, and platform health.</p>
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
 
       <div className="grid gap-6 xl:grid-cols-2">
         <div className="glass rounded-[32px] p-6">
-          <h2 className="font-display text-2xl font-semibold text-white dark:text-white">User growth</h2>
+          <h2 className="font-display text-2xl font-semibold text-slate-900">User growth</h2>
           <div className="mt-6 h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={dashboard.userGrowth}>
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
           </div>
         </div>
         <div className="glass rounded-[32px] p-6">
-          <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Organizer performance</h2>
+          <h2 className="font-display text-2xl font-semibold text-slate-900">Organizer performance</h2>
           <div className="mt-6 h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dashboard.organizerPerformance}>
@@ -113,14 +113,14 @@ export default function AdminDashboard() {
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <div className="glass rounded-[32px] p-6">
-          <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Pending event approvals</h2>
+          <h2 className="font-display text-2xl font-semibold text-slate-900">Pending event approvals</h2>
           <div className="mt-6 space-y-4">
             {events.map((event) => (
-              <div key={event._id} className="rounded-3xl bg-white/5 p-5">
+              <div key={event._id} className="rounded-3xl border border-slate-100 bg-white/85 p-5">
                 <div className="flex flex-col justify-between gap-4 md:flex-row">
                   <div>
-                    <div className="font-semibold text-white dark:text-white">{event.title}</div>
-                    <div className="mt-1 text-sm text-slate-400">{event.organizerName} · {formatDate(event.startDate)}</div>
+                    <div className="font-semibold text-slate-900">{event.title}</div>
+                    <div className="mt-1 text-sm text-slate-500">{event.organizerName} · {formatDate(event.startDate)}</div>
                   </div>
                   <div className="flex gap-3">
                     <button onClick={() => handleApproval(event._id, "approved")} className="btn-primary">Approve</button>
@@ -129,13 +129,13 @@ export default function AdminDashboard() {
                 </div>
               </div>
             ))}
-            {!events.length ? <div className="text-sm text-slate-400">No pending approvals right now.</div> : null}
+            {!events.length ? <div className="text-sm text-slate-500">No pending approvals right now.</div> : null}
           </div>
         </div>
 
         <div className="space-y-6">
           <div className="glass rounded-[32px] p-6">
-            <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Manage categories</h2>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Manage categories</h2>
             <form onSubmit={handleCreateCategory} className="mt-5 space-y-4">
               <input className="input" placeholder="Category name" value={categoryForm.name} onChange={(e) => setCategoryForm({ ...categoryForm, name: e.target.value })} required />
               <textarea className="input min-h-28" placeholder="Description" value={categoryForm.description} onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })} />
@@ -144,21 +144,21 @@ export default function AdminDashboard() {
             </form>
             <div className="mt-5 space-y-3">
               {categories.map((category) => (
-                <div key={category._id} className="rounded-2xl bg-white/5 p-4">
-                  <div className="font-medium text-white dark:text-white">{category.name}</div>
-                  <div className="text-sm text-slate-400">{category.description}</div>
+                <div key={category._id} className="rounded-2xl border border-slate-100 bg-white/85 p-4">
+                  <div className="font-medium text-slate-900">{category.name}</div>
+                  <div className="text-sm text-slate-500">{category.description}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="glass rounded-[32px] p-6">
-            <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Users</h2>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Users</h2>
             <div className="mt-5 space-y-3">
               {users.slice(0, 6).map((user) => (
-                <div key={user._id} className="rounded-2xl bg-white/5 p-4">
-                  <div className="font-medium text-white dark:text-white">{user.name}</div>
-                  <div className="text-sm text-slate-400">{user.email} · {user.role}</div>
+                <div key={user._id} className="rounded-2xl border border-slate-100 bg-white/85 p-4">
+                  <div className="font-medium text-slate-900">{user.name}</div>
+                  <div className="text-sm text-slate-500">{user.email} · {user.role}</div>
                 </div>
               ))}
             </div>

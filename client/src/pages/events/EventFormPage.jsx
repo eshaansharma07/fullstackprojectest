@@ -73,8 +73,8 @@ export default function EventFormPage() {
   };
 
   return (
-    <div className="glass rounded-[32px] p-8">
-      <h1 className="font-display text-4xl font-semibold text-white dark:text-white">
+    <div className="glass-strong rounded-[32px] p-8">
+      <h1 className="page-title">
         {isEdit ? "Edit Event" : "Create Event"}
       </h1>
       <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">

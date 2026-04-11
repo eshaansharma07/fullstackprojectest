@@ -32,8 +32,8 @@ export default function OrganizerDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Organizer Dashboard</h1>
-        <p className="mt-2 text-slate-400">Manage events, approvals, attendance, participants, and analytics.</p>
+        <h1 className="page-title">Organizer Dashboard</h1>
+        <p className="page-subtitle">Manage events, approvals, attendance, participants, and analytics.</p>
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">

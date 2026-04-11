@@ -26,7 +26,7 @@ export default function ProfilePage() {
 
   return (
     <div className="glass rounded-[32px] p-8">
-      <h1 className="font-display text-4xl font-semibold text-white dark:text-white">Profile</h1>
+      <h1 className="page-title">Profile</h1>
       <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">
         <input className="input" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
         <input className="input" placeholder="Institute" value={form.institute} onChange={(e) => setForm({ ...form, institute: e.target.value })} />
