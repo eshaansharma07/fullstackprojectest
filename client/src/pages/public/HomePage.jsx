@@ -19,8 +19,8 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-24 px-4 py-8 md:px-6">
-      <section className="relative overflow-hidden rounded-[40px] px-6 py-12 md:px-10">
+    <div className="mx-auto max-w-7xl space-y-20 px-4 py-8 md:px-6">
+      <section className="relative overflow-hidden rounded-[40px] px-6 py-10 md:px-10 md:py-12">
         <motion.div
           className="hero-blob left-[-120px] top-[-80px] h-72 w-72 bg-violet-300/30"
           animate={{ y: [0, 12, 0], x: [0, 10, 0] }}
@@ -38,15 +38,14 @@ export default function HomePage() {
         />
 
         <div className="relative grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-          <div className="space-y-7">
+          <div className="space-y-6">
             <span className="accent-pill">{t("brandTagline")}</span>
-            <div className="space-y-4">
-              <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 md:text-7xl">
-                Manage every <span className="gradient-text">event journey</span> with a brighter, premium startup UI.
+            <div className="max-w-2xl space-y-3">
+              <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
+                Plan, promote, and manage <span className="gradient-text">every event</span> from one clear dashboard.
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-slate-500">
-                EventSphere brings together registrations, approvals, analytics, reminders, dashboards, and ticketing in
-                one elegant light-theme experience inspired by luxury SaaS products.
+              <p className="max-w-xl text-base leading-7 text-slate-600 md:text-lg">
+                EventSphere helps organizers handle registrations, approvals, schedules, and attendee updates without the clutter of juggling multiple tools.
               </p>
             </div>
 
@@ -63,7 +62,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <Link to="/signup" className="btn-primary">
                 Get started <ArrowRight size={16} />
               </Link>
@@ -160,8 +159,8 @@ export default function HomePage() {
       <section className="space-y-8">
         <SectionHeading
           badge={t("featuredEvents")}
-          title="Featured events in a premium discovery layout"
-          description="Large glass cards, luxury spacing, pastel highlights, and polished hover states make the platform feel like a funded startup product."
+          title="Featured events"
+          description="Discover highlighted events with quick access to timing, venue, registrations, and details."
         />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {data?.featuredEvents?.length
@@ -171,7 +170,11 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-8">
-        <SectionHeading badge={t("categories")} title="Built for every format of campus and community event" />
+        <SectionHeading
+          badge={t("categories")}
+          title="Built for campus and community events"
+          description="Organize cultural programs, workshops, sports meets, and club activities from the same workspace."
+        />
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {(data?.categories || []).map((category) => (
             <div key={category._id} className="soft-card p-5 transition hover:-translate-y-1">
@@ -183,7 +186,11 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-8">
-        <SectionHeading badge="Recently Added" title="Freshly added events" />
+        <SectionHeading
+          badge="Recently Added"
+          title="Recently added events"
+          description="Stay up to date with newly published events that are open for discovery and registration."
+        />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {(data?.recentEvents || []).map((event) => (
             <EventCard key={event._id} event={event} compact />
@@ -192,7 +199,11 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-8">
-        <SectionHeading badge={t("testimonials")} title="Trusted by students, admins, and event teams" />
+        <SectionHeading
+          badge={t("testimonials")}
+          title="Trusted by students, admins, and event teams"
+          description="Feedback from people using EventSphere to organize and attend events more smoothly."
+        />
         <div className="grid gap-5 md:grid-cols-3">
           {(data?.testimonials || []).map((item) => (
             <div key={item._id} className="soft-card p-6">
