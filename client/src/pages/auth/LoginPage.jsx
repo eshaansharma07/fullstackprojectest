@@ -9,8 +9,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = await login(form);
-    navigate(user.role === "admin" ? "/admin" : user.role === "organizer" ? "/organizer" : "/dashboard");
+    try {
+      const user = await login(form);
+      navigate(user.role === "admin" ? "/admin" : user.role === "organizer" ? "/organizer" : "/dashboard");
+    } catch {
+      // AuthContext already surfaces the error via toast.
+    }
   };
 
   return (

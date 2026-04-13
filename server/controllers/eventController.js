@@ -10,6 +10,13 @@ import { sendSuccess, createError } from "../utils/apiResponse.js";
 import { uploadBuffer } from "../utils/cloudinary.js";
 import { buildEventFilters, parsePagination } from "../utils/query.js";
 
+const organizerSelect = "name email role institute profilePicture";
+const feedbackUserSelect = "name profilePicture";
+const publicEventPopulate = [
+  { path: "category" },
+  { path: "organizer", select: organizerSelect }
+];
+
 const computeStatus = (startDate, endDate) => {
   const now = new Date();
   if (now > new Date(endDate)) return "completed";
@@ -22,16 +29,20 @@ const buildSlug = (title) =>
 
 export const getPublicHomeData = async (_req, res) => {
   const [featuredEvents, trendingEvents, recentEvents, categories, stats, testimonials] = await Promise.all([
-    Event.find({ approvalStatus: "approved" }).populate("category organizer").sort({ featured: -1, startDate: 1 }).limit(6),
-    Event.find({ approvalStatus: "approved" }).populate("category organizer").sort({ trendingScore: -1, registrationCount: -1 }).limit(4),
-    Event.find({ approvalStatus: "approved" }).populate("category organizer").sort({ createdAt: -1 }).limit(4),
+    Event.find({ approvalStatus: "approved" }).populate(publicEventPopulate).sort({ featured: -1, startDate: 1 }).limit(6),
+    Event.find({ approvalStatus: "approved" }).populate(publicEventPopulate).sort({ trendingScore: -1, registrationCount: -1 }).limit(4),
+    Event.find({ approvalStatus: "approved" }).populate(publicEventPopulate).sort({ createdAt: -1 }).limit(4),
     Category.find().sort({ name: 1 }),
     Promise.all([
       Event.countDocuments({ approvalStatus: "approved" }),
       Registration.countDocuments({ status: { $in: ["registered", "attended"] } }),
       User.countDocuments({ isActive: true })
     ]),
-    Feedback.find().populate("user event").sort({ createdAt: -1 }).limit(3)
+    Feedback.find()
+      .populate("user", feedbackUserSelect)
+      .populate({ path: "event", populate: publicEventPopulate })
+      .sort({ createdAt: -1 })
+      .limit(3)
   ]);
 
   return sendSuccess(res, {
@@ -62,7 +73,7 @@ export const getEvents = async (req, res) => {
 
   const [events, total] = await Promise.all([
     Event.find(filters)
-      .populate("category organizer")
+      .populate(publicEventPopulate)
       .sort({ startDate: 1, createdAt: -1 })
       .skip(skip)
       .limit(limit),
@@ -82,7 +93,7 @@ export const getEvents = async (req, res) => {
 
 export const getEventById = async (req, res) => {
   const event = await Event.findById(req.params.id)
-    .populate("category organizer")
+    .populate(publicEventPopulate)
     .lean();
   if (!event) throw createError("Event not found", 404);
   const canViewUnapproved =
@@ -94,13 +105,13 @@ export const getEventById = async (req, res) => {
   }
 
   const [feedback, relatedEvents] = await Promise.all([
-    Feedback.find({ event: event._id }).populate("user").sort({ createdAt: -1 }),
+    Feedback.find({ event: event._id }).populate("user", feedbackUserSelect).sort({ createdAt: -1 }),
     Event.find({
       _id: { $ne: event._id },
       category: event.category?._id,
       approvalStatus: "approved"
     })
-      .populate("category organizer")
+      .populate(publicEventPopulate)
       .limit(3)
   ]);
 
@@ -215,7 +226,7 @@ export const getRecommendations = async (req, res) => {
     approvalStatus: "approved",
     $or: [{ category: { $in: categoryIds } }, { tags: { $in: categories } }]
   })
-    .populate("category organizer")
+    .populate(publicEventPopulate)
     .sort({ trendingScore: -1, startDate: 1 })
     .limit(6);
 

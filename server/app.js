@@ -12,10 +12,39 @@ import publicRoutes from "./routes/publicRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
+const configuredOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+
+  if (configuredOrigins.includes(origin)) {
+    return true;
+  }
+
+  try {
+    const { protocol, hostname } = new URL(origin);
+    const isLocalhost =
+      protocol === "http:" && (hostname === "localhost" || hostname === "127.0.0.1");
+    const isVercelPreview = protocol === "https:" && hostname.endsWith(".vercel.app");
+
+    return isLocalhost || isVercelPreview;
+  } catch {
+    return false;
+  }
+};
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL?.split(",") || "*",
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin not allowed by CORS"));
+    },
     credentials: true
   })
 );
