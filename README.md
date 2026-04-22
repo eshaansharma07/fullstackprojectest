@@ -1,164 +1,305 @@
-# EventSphere – Smart Event Management System
+EventSphere – Smart Event Management System
 
-EventSphere is a production-oriented full-stack MERN web application for colleges, institutes, clubs, RWAs, and local communities. It centralizes approvals, registrations, notifications, analytics, attendance, certificates, feedback, favorites, waitlists, and role-based dashboards in one platform.
+EventSphere is a production-grade full-stack MERN web application designed for colleges, institutes, clubs, RWAs, and local communities to manage events efficiently.
 
-## Tech Stack
+The platform centralizes the complete event lifecycle including:
 
-- Frontend: React.js, Vite, Tailwind CSS, Framer Motion, Recharts, React Big Calendar
-- Backend: Node.js, Express.js, Mongoose, JWT, bcrypt
-- Database: MongoDB Atlas
-- Uploads: Multer, Cloudinary
-- Notifications: Nodemailer
-- QR Code: qrcode
-- State: Context API
-- Deployment: Vercel frontend + Vercel serverless backend
+* Event creation and approval
+* Participant registration
+* Automatic waitlisting
+* QR-based attendance tracking
+* Certificate issuance
+* Real-time notifications
+* Analytics dashboards
+* Multilingual support
+* Dark/light mode
 
-## Key Features
+Live Demo
 
-- JWT authentication with role-based access control
-- Admin, organizer, and participant dashboards
-- Event creation, editing, approval, deletion, and moderation
-- Event categories, tags, featured events, trending events, and recent events
-- Event registration, cancellation, waitlist handling, and favorites
-- QR-based ticket generation plus organizer/admin attendance marking
-- Ticket PDF downloads
-- Feedback, ratings, certificates, and participant leaderboard
-- Real-time style notification polling and announcement system
-- Event analytics, charts, and event insights
-- English and Hindi language toggle
-- Dark and light mode
-- Calendar view, contact form, FAQ, terms, privacy, and 404 page
-- Seed data for quick demo and evaluation
+Frontend: https://client-umber-rho-85.vercel.app
 
-## Folder Structure
+GitHub Repository
 
-```text
-.
+Repository: https://github.com/eshaansharma07/fullstackprojectest
+
+⸻
+
+Features
+
+Admin Features
+
+* Approve or reject organizer-created events
+* Manage users and assign roles
+* View platform-wide analytics
+* Publish announcements
+* Monitor registrations and attendance
+
+Organizer Features
+
+* Create and manage events
+* Edit event details
+* View registrations
+* Mark attendance using QR scanning
+* Issue certificates
+* View event-specific analytics
+
+Participant Features
+
+* Browse and search events
+* Register for events
+* Get QR ticket instantly
+* Download PDF ticket
+* Track waitlist status
+* Save favorite events
+* Submit ratings and feedback
+* View leaderboard ranking
+
+⸻
+
+Tech Stack
+
+Frontend
+
+* React.js
+* Vite
+* Tailwind CSS
+* Framer Motion
+* React Router DOM
+* React Context API
+* Recharts
+* React Big Calendar
+
+Backend
+
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose
+* JWT Authentication
+* bcryptjs
+* Nodemailer
+* Multer
+* Cloudinary
+* QRCode
+
+Deployment
+
+* Vercel (Frontend)
+* Vercel Serverless Functions (Backend)
+* MongoDB Atlas
+* Cloudinary
+
+⸻
+
+Folder Structure
+
+fullstackprojectest/
+│
 ├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── assets/
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── server/
-├── docs/
-│   └── screenshots/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── config/
+│   ├── package.json
+│   └── server.js
+│
 ├── .env.example
-├── package.json
-├── README.md
-└── vercel.json
-```
+├── vercel.json
+└── README.md
 
-## Environment Variables
+⸻
 
-Create a root `.env` file for backend/local server settings:
+Environment Variables
 
-```env
-MONGODB_URI=
-JWT_SECRET=
+Backend (.env)
+
+MONGODB_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_strong_jwt_secret
 JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-PORT=5000
-NODE_ENV=development
-CLOUDINARY_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-EMAIL_USER=
-EMAIL_PASS=
-```
+CLIENT_URL=https://client-umber-rho-85.vercel.app
+SERVER_URL=https://server-umber.vercel.app
+NODE_ENV=production
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
 
-Create a root `.env.local` or Vercel frontend environment value for the client:
+Frontend (client/.env)
 
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+VITE_API_URL=https://server-umber.vercel.app/api
+VITE_APP_NAME=EventSphere
+VITE_CLIENT_URL=https://client-umber-rho-85.vercel.app
 
-Notes:
+⸻
 
-- `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, and `CLIENT_URL` are required for production.
-- `PORT` and `NODE_ENV` are used by the local/server runtime.
-- `CLOUDINARY_*` and `EMAIL_*` are optional in development, but features that depend on uploads or email will be skipped or limited if they are not set.
-- `SERVER_URL` is not used by the current codebase and is intentionally omitted.
+Installation & Setup
 
-## Local Setup
+1. Clone the Repository
 
-1. Clone the repository:
-```bash
 git clone https://github.com/eshaansharma07/fullstackprojectest.git
 cd fullstackprojectest
-```
 
-2. Install dependencies:
-```bash
+2. Install Frontend Dependencies
+
+cd client
 npm install
-```
 
-3. Add your environment variables to the root `.env`.
+3. Install Backend Dependencies
 
-4. Optional: set `VITE_API_URL=http://localhost:5000/api` in `.env.local` if you want to override the frontend API target explicitly.
+cd ../server
+npm install
 
-5. Seed sample data:
-```bash
-npm run seed
-```
+4. Configure Environment Variables
 
-6. Run both frontend and backend:
-```bash
+Create .env files in both server/ and client/ folders using the variables above.
+
+5. Run Backend
+
+cd server
 npm run dev
-```
 
-7. Open:
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:5000/api/health`
+6. Run Frontend
 
-## Demo Seed Accounts
+cd client
+npm run dev
 
-- Admin: `admin@eventsphere.com` / `password123`
-- Organizer: `organizer@eventsphere.com` / `password123`
-- Participant: `participant@eventsphere.com` / `password123`
+Frontend will run on:
 
-## API Documentation
+http://localhost:5173
 
-Detailed endpoint documentation is available in [docs/API.md](docs/API.md).
+Backend will run on:
 
-## Screenshots
+http://localhost:5000
 
-Add screenshots in [docs/screenshots](docs/screenshots) and update this section before submission:
+⸻
 
-- Home page
-- Participant dashboard
-- Organizer dashboard
-- Admin dashboard
-- Event details page
-- Calendar page
+API Modules
 
-## Deployment on Vercel
+* Authentication API
+* User Management API
+* Event Management API
+* Registration API
+* Waitlist API
+* QR Attendance API
+* Certificate API
+* Notification API
+* Feedback API
+* Analytics API
 
-### Backend deployment
+⸻
 
-1. Import the GitHub repo into Vercel.
-2. Set the project root directory to `server`.
-3. Framework preset: `Other`.
-4. Vercel uses [server/vercel.json](server/vercel.json).
-5. Add these production environment variables:
-   `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CLIENT_URL`
-6. Add these optional production environment variables if you use uploads or email features:
-   `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `EMAIL_USER`, `EMAIL_PASS`
-7. Deploy. The API health URL will be `/api/health`.
+Authentication & Authorization
 
-### Frontend deployment
+EventSphere uses JWT-based authentication with role-based access control.
 
-1. Create a second Vercel project for the same repo.
-2. Set the project root directory to `client`.
-3. Framework preset: `Vite`.
-4. Build command: `npm run build`
-5. Output directory: `dist`
-6. Add `VITE_API_URL` pointing to your deployed backend URL plus `/api`
-7. Vercel uses [client/vercel.json](client/vercel.json) so React routes work after refresh.
+Supported roles:
 
-### Suggested environment values
+* Admin
+* Organizer
+* Participant
 
-- Backend `CLIENT_URL`: your deployed frontend URL
-- Frontend `VITE_API_URL`: your deployed backend URL followed by `/api`
+Protected routes are secured using middleware.
 
-## Evaluation Talking Points
+⸻
 
-- Full MERN implementation with modular MVC backend
-- Real event flow with approvals, registration, waitlist, QR attendance, analytics, and certificates
-- Premium UI with dashboards, charts, dark mode, and responsive layouts
-- Clear deployment strategy and beginner-friendly project structure
+Major Functionalities
+
+Event Lifecycle
+
+Event Creation → Admin Approval → Registration → Waitlist → QR Ticket → Attendance → Feedback → Certificate
+
+QR Attendance
+
+* Unique QR code generated for each registration
+* Organizer scans QR code using browser camera
+* Attendance is marked instantly
+* Duplicate attendance is prevented
+
+Waitlist Management
+
+* Automatically adds users to waitlist if event capacity is full
+* Promotes waitlisted users automatically when someone cancels
+
+Analytics Dashboard
+
+* Total users
+* Total events
+* Total registrations
+* Attendance rate
+* Top participants
+* Event-wise feedback scores
+
+⸻
+
+Deployment
+
+Frontend Deployment
+
+Hosted on Vercel:
+
+https://client-umber-rho-85.vercel.app
+
+Backend Deployment
+
+Hosted as Vercel Serverless Functions.
+
+⸻
+
+Future Improvements
+
+* AI-powered event recommendations
+* Real-time chat using Socket.io
+* Payment gateway integration
+* Mobile app using React Native
+* Push notifications
+* Progressive Web App support
+* Google and GitHub OAuth login
+* More Indian language support
+
+⸻
+
+Screenshots
+
+Add screenshots here for:
+
+* Landing Page
+* Admin Dashboard
+* Organizer Dashboard
+* Participant Dashboard
+* QR Attendance Screen
+* Analytics Dashboard
+* Calendar View
+
+⸻
+
+Authors
+
+* Eshaan Sharma
+* Ramit Koirala
+
+⸻
+
+License
+
+This project is developed for academic and educational purposes under Chandigarh University.
+
+⸻
+
+Acknowledgement
+
+Special thanks to Chandigarh University, the Department of AIT-CSE, and our faculty guide Ms. Amandeep Kaur Seekhon for their support and guidance throughout the development of this project.
