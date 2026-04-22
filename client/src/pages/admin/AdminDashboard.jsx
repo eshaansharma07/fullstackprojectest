@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, BarChart, Bar } from "recharts";
+import { Link } from "react-router-dom";
 import api, { extractErrorMessage } from "../../api/http.js";
 import { StatCard } from "../../components/common/StatCard.jsx";
 import { Loader } from "../../components/ui/Loader.jsx";
@@ -71,6 +72,18 @@ export default function AdminDashboard() {
         <StatCard title="Total Users" value={dashboard.cards.totalUsers} description="All active accounts" />
         <StatCard title="Total Events" value={dashboard.cards.totalEvents} description="Across colleges and communities" tone="emerald" />
         <StatCard title="Total Registrations" value={dashboard.cards.totalRegistrations} description="Tracks adoption and demand" tone="pink" />
+      </div>
+
+      <div className="glass rounded-[32px] p-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Attendance tab</h2>
+            <p className="mt-2 text-slate-500">Open the separate attendance tab to mark participants present or absent without pasting tokens.</p>
+          </div>
+          <Link to="/attendance" className="btn-primary">
+            Open attendance
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">

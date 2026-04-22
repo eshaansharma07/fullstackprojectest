@@ -15,6 +15,7 @@ import EventFormPage from "../pages/events/EventFormPage.jsx";
 import MyRegistrationsPage from "../pages/dashboard/MyRegistrationsPage.jsx";
 import FavoritesPage from "../pages/dashboard/FavoritesPage.jsx";
 import NotificationsPage from "../pages/dashboard/NotificationsPage.jsx";
+import AttendancePage from "../pages/dashboard/AttendancePage.jsx";
 import CalendarPage from "../pages/public/CalendarPage.jsx";
 import ContactPage from "../pages/public/ContactPage.jsx";
 import FAQPage from "../pages/public/FAQPage.jsx";
@@ -60,6 +61,7 @@ export const appRouter = createBrowserRouter(
       <Route element={<ProtectedRoute roles={["organizer", "admin"]} />}>
         <Route element={<DashboardShell />}>
           <Route path="/organizer" element={<OrganizerDashboard />} />
+          <Route path="/attendance" element={<AttendancePage />} />
           <Route path="/events/create" element={<EventFormPage />} />
           <Route path="/events/:id/edit" element={<EventFormPage />} />
         </Route>

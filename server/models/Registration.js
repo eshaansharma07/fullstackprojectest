@@ -6,7 +6,7 @@ const registrationSchema = new mongoose.Schema(
     participant: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     status: {
       type: String,
-      enum: ["registered", "cancelled", "waitlisted", "attended"],
+      enum: ["registered", "cancelled", "waitlisted", "attended", "absent"],
       default: "registered"
     },
     qrToken: { type: String, required: true, unique: true },

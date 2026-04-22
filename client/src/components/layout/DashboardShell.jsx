@@ -1,4 +1,4 @@
-import { CalendarRange, Heart, Home, LayoutDashboard, PlusSquare, ShieldCheck, UserCircle2 } from "lucide-react";
+import { CalendarRange, ClipboardCheck, Heart, Home, LayoutDashboard, PlusSquare, ShieldCheck, UserCircle2 } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { BrandLogo } from "../common/BrandLogo.jsx";
@@ -13,12 +13,14 @@ const roleLinks = {
   ],
   organizer: [
     { label: "Overview", to: "/organizer", icon: LayoutDashboard },
+    { label: "Attendance", to: "/attendance", icon: ClipboardCheck },
     { label: "Create Event", to: "/events/create", icon: PlusSquare },
     { label: "Notifications", to: "/notifications", icon: Home },
     { label: "Profile", to: "/profile", icon: UserCircle2 }
   ],
   admin: [
     { label: "Overview", to: "/admin", icon: ShieldCheck },
+    { label: "Attendance", to: "/attendance", icon: ClipboardCheck },
     { label: "Create Event", to: "/events/create", icon: PlusSquare },
     { label: "Notifications", to: "/notifications", icon: Home },
     { label: "Profile", to: "/profile", icon: UserCircle2 }

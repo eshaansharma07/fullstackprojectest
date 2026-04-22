@@ -9,6 +9,40 @@ import { sendEmail } from "../utils/email.js";
 
 const createTicketNumber = () => `EVS-${Date.now().toString().slice(-6)}-${crypto.randomBytes(2).toString("hex").toUpperCase()}`;
 
+const ensureAttendanceAccess = (registration, user) => {
+  const organizerId = registration.event?.organizer?.toString?.() || registration.event?.organizer?._id?.toString?.();
+  if (user.role !== "admin" && organizerId !== user._id.toString()) {
+    throw createError("Only organizers or admins can manage attendance", 403);
+  }
+};
+
+const syncEventAttendanceCount = async (eventId) => {
+  const attendeesCount = await Registration.countDocuments({ event: eventId, status: "attended" });
+  await Event.findByIdAndUpdate(eventId, { attendeesCount });
+  return attendeesCount;
+};
+
+const syncAttendanceArtifacts = async (registration, status) => {
+  if (status === "attended") {
+    let certificate = await Certificate.findOne({ event: registration.event._id, user: registration.participant._id });
+    if (!certificate) {
+      certificate = await Certificate.create({
+        event: registration.event._id,
+        user: registration.participant._id,
+        certificateId: `CERT-${crypto.randomBytes(4).toString("hex").toUpperCase()}`
+      });
+    }
+    registration.certificateIssued = true;
+    registration.checkedInAt = new Date();
+    return certificate;
+  }
+
+  await Certificate.findOneAndDelete({ event: registration.event._id, user: registration.participant._id });
+  registration.certificateIssued = false;
+  registration.checkedInAt = null;
+  return null;
+};
+
 export const registerForEvent = async (req, res) => {
   const event = await Event.findById(req.params.eventId);
   if (!event) throw createError("Event not found", 404);
@@ -125,31 +159,90 @@ export const getMyRegistrations = async (req, res) => {
   return sendSuccess(res, { data: enriched });
 };
 
+export const getAttendanceBoard = async (req, res) => {
+  const eventFilters = req.user.role === "admin" ? {} : { organizer: req.user._id };
+  const events = await Event.find(eventFilters)
+    .select("title startDate venue approvalStatus organizer attendeesCount registrationCount")
+    .sort({ startDate: -1, createdAt: -1 });
+
+  if (!events.length) {
+    return sendSuccess(res, {
+      data: {
+        events: [],
+        selectedEventId: null,
+        registrations: [],
+        summary: { total: 0, present: 0, absent: 0, pending: 0 }
+      }
+    });
+  }
+
+  const selectedEventId = req.query.eventId || events[0]._id.toString();
+  const selectedEvent = events.find((event) => event._id.toString() === selectedEventId);
+  if (!selectedEvent) throw createError("Event not found", 404);
+
+  const registrations = await Registration.find({ event: selectedEventId })
+    .populate("participant", "name email institute")
+    .sort({ createdAt: 1 });
+
+  const summary = registrations.reduce(
+    (acc, registration) => {
+      acc.total += 1;
+      if (registration.status === "attended") acc.present += 1;
+      else if (registration.status === "absent") acc.absent += 1;
+      else if (registration.status !== "cancelled" && registration.status !== "waitlisted") acc.pending += 1;
+      return acc;
+    },
+    { total: 0, present: 0, absent: 0, pending: 0 }
+  );
+
+  return sendSuccess(res, {
+    data: {
+      events,
+      selectedEventId,
+      registrations,
+      summary
+    }
+  });
+};
+
+export const updateAttendanceStatus = async (req, res) => {
+  const { status } = req.body;
+  if (!["attended", "absent"].includes(status)) {
+    throw createError("Attendance status must be attended or absent", 400);
+  }
+
+  const registration = await Registration.findById(req.params.id).populate("event participant");
+  if (!registration) throw createError("Registration not found", 404);
+
+  ensureAttendanceAccess(registration, req.user);
+
+  if (["cancelled", "waitlisted"].includes(registration.status)) {
+    throw createError("Only confirmed registrations can be marked present or absent", 400);
+  }
+
+  const certificate = await syncAttendanceArtifacts(registration, status);
+  registration.status = status;
+  await registration.save();
+
+  const attendeesCount = await syncEventAttendanceCount(registration.event._id);
+
+  return sendSuccess(res, {
+    message: status === "attended" ? "Marked present successfully" : "Marked absent successfully",
+    data: { registration, certificate, attendeesCount }
+  });
+};
+
 export const markAttendance = async (req, res) => {
   const { qrToken } = req.body;
   const registration = await Registration.findOne({ qrToken }).populate("event participant");
   if (!registration) throw createError("Invalid QR code", 404);
 
-  const event = registration.event;
-  if (req.user.role !== "admin" && event.organizer.toString() !== req.user._id.toString()) {
-    throw createError("Only organizers or admins can mark attendance", 403);
-  }
+  ensureAttendanceAccess(registration, req.user);
 
+  const certificate = await syncAttendanceArtifacts(registration, "attended");
   registration.status = "attended";
-  registration.checkedInAt = new Date();
   await registration.save();
-
-  event.attendeesCount += 1;
-  await event.save();
-
-  let certificate = await Certificate.findOne({ event: event._id, user: registration.participant._id });
-  if (!certificate) {
-    certificate = await Certificate.create({
-      event: event._id,
-      user: registration.participant._id,
-      certificateId: `CERT-${crypto.randomBytes(4).toString("hex").toUpperCase()}`
-    });
-  }
+  await syncEventAttendanceCount(registration.event._id);
 
   return sendSuccess(res, {
     message: "Attendance marked successfully",

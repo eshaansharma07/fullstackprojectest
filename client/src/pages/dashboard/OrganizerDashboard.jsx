@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from "recharts";
-import api, { extractErrorMessage } from "../../api/http.js";
+import { Link } from "react-router-dom";
+import api from "../../api/http.js";
 import { StatCard } from "../../components/common/StatCard.jsx";
 import { SectionHeading } from "../../components/common/SectionHeading.jsx";
 import { Loader } from "../../components/ui/Loader.jsx";
@@ -10,22 +10,9 @@ const COLORS = ["#38bdf8", "#34d399", "#f472b6", "#f59e0b"];
 
 export default function OrganizerDashboard() {
   const [dashboard, setDashboard] = useState(null);
-  const [token, setToken] = useState("");
-
   useEffect(() => {
     api.get("/dashboard/organizer").then((response) => setDashboard(response.data.data));
   }, []);
-
-  const handleScan = async (event) => {
-    event.preventDefault();
-    try {
-      await api.post("/registrations/scan", { qrToken: token });
-      toast.success("Attendance marked");
-      setToken("");
-    } catch (error) {
-      toast.error(extractErrorMessage(error));
-    }
-  };
 
   if (!dashboard) return <Loader label="Loading organizer insights..." />;
 
@@ -65,11 +52,14 @@ export default function OrganizerDashboard() {
         </div>
 
         <div className="glass rounded-[32px] p-6">
-          <SectionHeading badge="Attendance" title="QR scan attendance desk" />
-          <form onSubmit={handleScan} className="mt-6 space-y-4">
-            <textarea className="input min-h-36" placeholder="Paste QR token after scanning" value={token} onChange={(e) => setToken(e.target.value)} />
-            <button className="btn-primary w-full" type="submit">Mark attendance</button>
-          </form>
+          <SectionHeading
+            badge="Attendance"
+            title="Simple attendance workflow"
+            description="Open the attendance tab to mark participants present or absent with one click."
+          />
+          <Link to="/attendance" className="btn-primary mt-6 w-full">
+            Open attendance tab
+          </Link>
         </div>
       </div>
 
