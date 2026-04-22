@@ -52,8 +52,8 @@ Create a `.env` file in the project root and keep these values available for the
 MONGODB_URI=
 JWT_SECRET=
 JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-SERVER_URL=http://localhost:5000
+CLIENT_URL=https://client-umber-rho-85.vercel.app
+SERVER_URL=https://server-five-flame-54.vercel.app
 CLOUDINARY_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
