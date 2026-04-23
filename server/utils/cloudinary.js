@@ -17,7 +17,7 @@ export const uploadBuffer = async (buffer, folder) => {
   if (!buffer) return "";
 
   if (!isConfigured) {
-    return "";
+    throw new Error("Image upload is not configured on the server. Add Cloudinary environment variables to enable custom images.");
   }
 
   return new Promise((resolve, reject) => {
