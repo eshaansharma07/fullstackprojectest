@@ -98,20 +98,44 @@ export default function EventFormPage() {
         {isEdit ? "Edit Event" : "Create Event"}
       </h1>
       <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">
-        <input className="input" placeholder="Event title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
-        <select className="input" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} required>
-          <option value="">Select category</option>
-          {categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)}
-        </select>
-        <input className="input" placeholder="Venue" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} required />
-        <input className="input" type="number" placeholder="Capacity" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: e.target.value })} required />
-        <input className="input" type="datetime-local" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} required />
-        <input className="input" type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} required />
-        <input className="input" type="datetime-local" value={form.registrationDeadline} onChange={(e) => setForm({ ...form, registrationDeadline: e.target.value })} required />
-        <select className="input" value={form.mode} onChange={(e) => setForm({ ...form, mode: e.target.value })}>
-          <option value="offline">Offline</option>
-          <option value="online">Online</option>
-        </select>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Event title
+          <input className="input" placeholder="Event title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Category
+          <select className="input" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} required>
+            <option value="">Select category</option>
+            {categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)}
+          </select>
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Venue
+          <input className="input" placeholder="Venue" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Capacity
+          <input className="input" type="number" placeholder="Capacity" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Event start date & time
+          <input className="input" type="datetime-local" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Event end date & time
+          <input className="input" type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Last date to register
+          <input className="input" type="datetime-local" value={form.registrationDeadline} onChange={(e) => setForm({ ...form, registrationDeadline: e.target.value })} required />
+        </label>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Event mode
+          <select className="input" value={form.mode} onChange={(e) => setForm({ ...form, mode: e.target.value })}>
+            <option value="offline">Offline</option>
+            <option value="online">Online</option>
+          </select>
+        </label>
         <label className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-sm font-medium text-slate-700">
           Event card image
           <input
