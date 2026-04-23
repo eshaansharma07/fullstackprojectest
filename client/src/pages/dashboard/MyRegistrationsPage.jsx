@@ -45,7 +45,7 @@ export default function MyRegistrationsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="page-title">My Registrations</h1>
-        <p className="page-subtitle">Download tickets, view QR codes, and manage cancellations.</p>
+        <p className="page-subtitle">Download tickets and manage cancellations in one place.</p>
       </div>
       <div className="grid gap-6 xl:grid-cols-2">
         {registrations.map((item) => (
@@ -55,7 +55,6 @@ export default function MyRegistrationsPage() {
               <div className="mt-2 text-sm text-slate-500">{formatDate(item.event?.startDate)} · {item.event?.venue}</div>
               <div className="mt-3 text-sm text-slate-600">Ticket: {item.ticketNumber}</div>
               <div className="mt-3 text-sm capitalize text-slate-600">Status: {item.status}</div>
-              <img src={item.qrCode} alt="QR Code" className="mt-4 h-32 w-32 rounded-2xl bg-white p-2" />
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
               <button className="btn-primary" onClick={() => downloadTicket(item._id)}>Download PDF</button>

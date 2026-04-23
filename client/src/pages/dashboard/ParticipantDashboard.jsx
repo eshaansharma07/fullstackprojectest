@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BarChart, Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import api from "../../api/http.js";
 import { EventCard } from "../../components/common/EventCard.jsx";
@@ -10,14 +10,34 @@ import { useAuth } from "../../context/AuthContext.jsx";
 export default function ParticipantDashboard() {
   const [dashboard, setDashboard] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [registeredEventIds, setRegisteredEventIds] = useState([]);
+  const [eventFilter, setEventFilter] = useState("available");
   const { user } = useAuth();
 
   useEffect(() => {
-    Promise.all([api.get("/dashboard/participant"), api.get("/events/recommendations/ai")]).then(([dashboardRes, recRes]) => {
+    Promise.all([api.get("/dashboard/participant"), api.get("/events/recommendations/ai"), api.get("/registrations/me")]).then(([dashboardRes, recRes, registrationsRes]) => {
       setDashboard(dashboardRes.data.data);
       setRecommendations(recRes.data.data);
+      setRegisteredEventIds(
+        registrationsRes.data.data
+          .filter((item) => item.status !== "cancelled")
+          .map((item) => item.event?._id)
+          .filter(Boolean)
+      );
     });
   }, []);
+
+  const filteredRecommendations = useMemo(() => {
+    if (eventFilter === "registered") {
+      return recommendations.filter((event) => registeredEventIds.includes(event._id));
+    }
+
+    if (eventFilter === "available") {
+      return recommendations.filter((event) => !registeredEventIds.includes(event._id));
+    }
+
+    return recommendations;
+  }, [eventFilter, recommendations, registeredEventIds]);
 
   if (!dashboard) return <Loader label="Loading dashboard..." />;
 
@@ -63,12 +83,37 @@ export default function ParticipantDashboard() {
       </div>
 
       <section className="space-y-6">
-        <SectionHeading badge="Recommendations" title="Events that match your interests and history" />
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <SectionHeading badge="Recommendations" title="Events that match your interests and history" />
+          <div className="flex flex-wrap gap-2">
+            {[
+              { key: "available", label: "Available events" },
+              { key: "registered", label: "Already registered" },
+              { key: "all", label: "All" }
+            ].map((filter) => (
+              <button
+                key={filter.key}
+                type="button"
+                onClick={() => setEventFilter(filter.key)}
+                className={
+                  eventFilter === filter.key
+                    ? "rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+                    : "rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600"
+                }
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {recommendations.map((event) => (
+          {filteredRecommendations.map((event) => (
             <EventCard key={event._id} event={event} />
           ))}
         </div>
+        {!filteredRecommendations.length ? (
+          <div className="text-sm text-slate-500">No events match the selected filter right now.</div>
+        ) : null}
       </section>
     </div>
   );
