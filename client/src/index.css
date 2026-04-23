@@ -13,7 +13,7 @@
     --card-bg: rgba(255, 255, 255, 0.75);
     --border-soft: rgba(148, 163, 184, 0.15);
     --text-primary: #0f172a;
-    --text-secondary: #64748b;
+    --text-secondary: #475569;
     --accent-purple: #8b5cf6;
     --accent-blue: #3b82f6;
     --accent-cyan: #06b6d4;
@@ -109,7 +109,7 @@
   }
 
   .page-subtitle {
-    @apply mt-2 text-slate-500;
+    @apply mt-2 font-medium text-slate-700;
   }
 
   .soft-card {

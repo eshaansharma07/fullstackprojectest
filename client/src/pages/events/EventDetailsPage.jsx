@@ -74,37 +74,37 @@ export default function EventDetailsPage() {
       <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="space-y-8">
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="glass rounded-3xl p-5"><Calendar className="mb-3 text-sky-300" />{formatDate(eventData.startDate)}</div>
-            <div className="glass rounded-3xl p-5"><Clock3 className="mb-3 text-emerald-300" />Deadline: {formatDate(eventData.registrationDeadline)}</div>
-            <div className="glass rounded-3xl p-5"><MapPin className="mb-3 text-pink-300" />{eventData.venue}</div>
-            <div className="glass rounded-3xl p-5"><UserRound className="mb-3 text-amber-300" />{eventData.organizerName}</div>
+            <div className="glass rounded-3xl p-5 text-slate-800"><Calendar className="mb-3 text-sky-500" />{formatDate(eventData.startDate)}</div>
+            <div className="glass rounded-3xl p-5 text-slate-800"><Clock3 className="mb-3 text-emerald-500" />Deadline: {formatDate(eventData.registrationDeadline)}</div>
+            <div className="glass rounded-3xl p-5 text-slate-800"><MapPin className="mb-3 text-pink-500" />{eventData.venue}</div>
+            <div className="glass rounded-3xl p-5 text-slate-800"><UserRound className="mb-3 text-amber-500" />{eventData.organizerName}</div>
           </div>
 
           <div className="glass rounded-[32px] p-6">
-            <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Details</h2>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Details</h2>
             <div className="mt-4 flex flex-wrap gap-2">
               {eventData.tags?.map((tag) => (
-                <span key={tag} className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">{tag}</span>
+                <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">{tag}</span>
               ))}
             </div>
-            <div className="mt-5 text-sm leading-7 text-slate-300">
+            <div className="mt-5 text-sm leading-7 text-slate-700">
               Capacity: {eventData.capacity} · Mode: {eventData.mode} · Status: {eventData.status}
             </div>
           </div>
 
           <div className="glass rounded-[32px] p-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Feedback & ratings</h2>
-              <div className="flex items-center gap-2 rounded-full bg-amber-400/10 px-3 py-1 text-sm text-amber-300">
+              <h2 className="font-display text-2xl font-semibold text-slate-900">Feedback & ratings</h2>
+              <div className="flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700">
                 <Star size={16} /> {averageRating}
               </div>
             </div>
             <div className="mt-5 space-y-4">
               {eventData.feedback.map((item) => (
-                <div key={item._id} className="rounded-2xl bg-white/5 p-4">
-                  <div className="font-medium text-white dark:text-white">{item.user?.name}</div>
-                  <div className="text-sm text-slate-400">Rating: {item.rating}/5</div>
-                  <p className="mt-2 text-sm text-slate-300">{item.comment}</p>
+                <div key={item._id} className="rounded-2xl bg-white/70 p-4">
+                  <div className="font-medium text-slate-900">{item.user?.name}</div>
+                  <div className="text-sm text-slate-600">Rating: {item.rating}/5</div>
+                  <p className="mt-2 text-sm text-slate-700">{item.comment}</p>
                 </div>
               ))}
             </div>
@@ -122,8 +122,8 @@ export default function EventDetailsPage() {
 
         <div className="space-y-8">
           <div className="glass rounded-[32px] p-6">
-            <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Registration</h2>
-            <div className="mt-5 space-y-3 text-sm text-slate-300">
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Registration</h2>
+            <div className="mt-5 space-y-3 text-sm text-slate-700">
               <div>Registrations: {eventData.registrationCount}</div>
               <div>Available seats: {Math.max(eventData.capacity - eventData.registrationCount, 0)}</div>
               <div>Approval: {eventData.approvalStatus}</div>
@@ -134,7 +134,7 @@ export default function EventDetailsPage() {
           </div>
 
           <div className="space-y-5">
-            <h2 className="font-display text-2xl font-semibold text-white dark:text-white">Related events</h2>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">Related events</h2>
             {eventData.relatedEvents.map((item) => (
               <EventCard key={item._id} event={item} compact />
             ))}

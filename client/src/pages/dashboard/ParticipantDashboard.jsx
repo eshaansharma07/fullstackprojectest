@@ -10,14 +10,21 @@ import { useAuth } from "../../context/AuthContext.jsx";
 export default function ParticipantDashboard() {
   const [dashboard, setDashboard] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [registeredEventIds, setRegisteredEventIds] = useState([]);
   const [eventFilter, setEventFilter] = useState("available");
   const { user } = useAuth();
 
   useEffect(() => {
-    Promise.all([api.get("/dashboard/participant"), api.get("/events/recommendations/ai"), api.get("/registrations/me")]).then(([dashboardRes, recRes, registrationsRes]) => {
+    Promise.all([
+      api.get("/dashboard/participant"),
+      api.get("/events/recommendations/ai"),
+      api.get("/registrations/me"),
+      api.get("/events?limit=100")
+    ]).then(([dashboardRes, recRes, registrationsRes, eventsRes]) => {
       setDashboard(dashboardRes.data.data);
       setRecommendations(recRes.data.data);
+      setAllEvents(eventsRes.data.data);
       setRegisteredEventIds(
         registrationsRes.data.data
           .filter((item) => item.status !== "cancelled")
@@ -27,17 +34,24 @@ export default function ParticipantDashboard() {
     });
   }, []);
 
+  const visibleEvents = useMemo(() => {
+    const merged = [...recommendations, ...allEvents];
+    const deduped = merged.filter((event, index, source) => source.findIndex((item) => item._id === event._id) === index);
+
+    return deduped.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  }, [allEvents, recommendations]);
+
   const filteredRecommendations = useMemo(() => {
     if (eventFilter === "registered") {
-      return recommendations.filter((event) => registeredEventIds.includes(event._id));
+      return visibleEvents.filter((event) => registeredEventIds.includes(event._id));
     }
 
     if (eventFilter === "available") {
-      return recommendations.filter((event) => !registeredEventIds.includes(event._id));
+      return visibleEvents.filter((event) => !registeredEventIds.includes(event._id));
     }
 
-    return recommendations;
-  }, [eventFilter, recommendations, registeredEventIds]);
+    return visibleEvents;
+  }, [eventFilter, visibleEvents, registeredEventIds]);
 
   if (!dashboard) return <Loader label="Loading dashboard..." />;
 
@@ -72,10 +86,10 @@ export default function ParticipantDashboard() {
         <div className="glass rounded-[32px] p-6">
           <SectionHeading badge="AI Picks" title="Recommended events for you" />
           <div className="mt-5 space-y-4">
-            {recommendations.slice(0, 3).map((event) => (
+            {(recommendations.length ? recommendations : visibleEvents).slice(0, 3).map((event) => (
               <div key={event._id} className="rounded-2xl border border-slate-100 bg-white/90 p-4">
                 <div className="font-medium text-slate-900">{event.title}</div>
-                <div className="mt-1 text-sm text-slate-500">{event.category?.name}</div>
+                <div className="mt-1 text-sm text-slate-600">{event.category?.name}</div>
               </div>
             ))}
           </div>
@@ -84,7 +98,7 @@ export default function ParticipantDashboard() {
 
       <section className="space-y-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <SectionHeading badge="Recommendations" title="Events that match your interests and history" />
+          <SectionHeading badge="Events" title="Browse approved events and quickly separate new ones from your registrations" />
           <div className="flex flex-wrap gap-2">
             {[
               { key: "available", label: "Available events" },
